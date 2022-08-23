@@ -1,0 +1,32 @@
+{
+  "name": "node-email-util",
+  "version": "1.0.0",
+  "description": "Email util in Node js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "googleapis": "^107.0.0",
+    "nodemailer": "^6.7.8",
+    "nodemon": "^2.0.19"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hariarasan/NodeEmailUtil.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hariarasan/NodeEmailUtil/issues"
+  },
+  "homepage": "https://github.com/hariarasan/NodeEmailUtil#readme"
+}
