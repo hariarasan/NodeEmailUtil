@@ -17,21 +17,27 @@ app.post('/submit', function (req, res) {
       console.log( reqBody );
 
       var emailText = "<div> Dear " + reqBody.customerName + ", <br/> <br/>" + 
-                  "Thanks for placing the order with Anandam Crackers. "+ " <br/> " + 
+                  "Thanks for placing the order with Anandam Crackers. "+ " <br/> " +                   
                   "Given below the estimate. Our sales representative will contact you shortly. " + "<br/> <br/>"                  
                   + "</div>"; 
 
+      var customerDetails = "<br/><div> Your Contatct No. " + reqBody.customerMobile + " <br/> " + 
+                            "Your Delivery Details are : " + reqBody.customerAddress + " <br/> " + 
+                              + "</div>";
+                  
       var emailFooter = "<br/><div> Thanks, </div>" + 
                         "<div> Anandam Crackers </div>" + 
-                        "<div> Mobile # : 9943450902 </div>" + 
+                        "<div> Mobile # : 9840248087 / 9943450902 / 9786921234</div>" + 
                         "<div> Email    :  </div>"
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
       mailer.sendEmail({
             subject: "Anandam Crackers - Estimate for your Crackers Order",
-            html: emailText + reqBody.emailHtmlContent + emailFooter,
+            html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
             to: "hariaccet06@gmail.com",
+            cc: "sivakasianandamcrackers@gmail.com, aj.subramani@gmail.com, ktsm1982@gmail.com",
+            bcc: "hariaccet06@gmail.com, ananda_arasu@hotmail.com",
             from: process.env.EMAIL
       });      
 
@@ -41,5 +47,5 @@ app.post('/submit', function (req, res) {
 var server = app.listen(process.env.PORT || 5000, function () {
    var host = server.address().address
    var port = server.address().port
-   console.log("Example app listening at http://%s:%s", host, port)
+   console.log("Email Util app listening at http://%s:%s", host, port)
 })
