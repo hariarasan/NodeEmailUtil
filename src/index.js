@@ -21,23 +21,23 @@ app.post('/submit', function (req, res) {
                   "Given below the estimate. Our sales representative will contact you shortly. " + "<br/> <br/>"                  
                   + "</div>"; 
 
-      var customerDetails = "<br/><div> Your Contatct No. " + reqBody.customerMobile + " <br/> " + 
-                            "Your Delivery Details are : " + reqBody.customerAddress + " <br/> " + 
-                              + "</div>";
+      var customerDetails = "<br/><div> Your Contatct No. " + reqBody.customerMobile + " </div><br/> " + 
+                            "<div> Your Delivery Details are : " + reqBody.customerAddress  + "</div><br/>";
+                             
                   
-      var emailFooter = "<br/><div> Thanks, </div>" + 
+      var emailFooter = "<br/><br/>" + "<div> Thanks, </div>" + 
                         "<div> Anandam Crackers </div>" + 
-                        "<div> Mobile # : 9840248087 / 9943450902 / 9786921234</div>" + 
-                        "<div> Email    :  </div>"
+                        "<div> Mobile # : 9943450902 / 9840248087 / 9786921234</div>" + 
+                        "<div> Email    : Anandamcrackersagency@gmail.com </div>"
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
       mailer.sendEmail({
             subject: "Anandam Crackers - Estimate for your Crackers Order",
             html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
-            to: "hariaccet06@gmail.com",
-            cc: "sivakasianandamcrackers@gmail.com, aj.subramani@gmail.com, ktsm1982@gmail.com",
-            bcc: "hariaccet06@gmail.com, ananda_arasu@hotmail.com",
+            to: reqBody.customerEmail,
+            cc: "Anandamcrackersagency@gmail.com",
+            bcc: "aj.subramani@gmail.com, ktsm1982@gmail.com",
             from: process.env.EMAIL
       });      
 
