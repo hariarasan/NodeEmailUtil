@@ -31,13 +31,13 @@ app.post('/submit', function (req, res) {
                         "<div> Email    : Anandamcrackersagency@gmail.com </div>"
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
+      console.log(" Email : " + process.env.EMAIL)
       mailer.sendEmail({
             subject: "Anandam Crackers - Estimate for your Crackers Order",
             html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
             to: reqBody.customerEmail,
-            cc: "Anandamcrackersagency@gmail.com",
-            bcc: "aj.subramani@gmail.com, ktsm1982@gmail.com",
+            cc: "ktsm1982@gmail.com",
+            bcc: "rbabu2165@gmail.com",
             from: process.env.EMAIL
       });      
 

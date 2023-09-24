@@ -9,9 +9,10 @@ const createTransporter = async () => {
     process.env.CLIENT_SECRET,
     "https://developers.google.com/oauthplayground"
   );
-
+  console.log("Refresh Token: ")
+  console.log(process.env.REFRESH_TOKEN)
   oauth2Client.setCredentials({
-    refresh_token: process.env.REFRESH_TOKEN
+    refresh_token: process.env.REFRESH_TOKEN    
   });
 
   const accessToken = await new Promise((resolve, reject) => {    
