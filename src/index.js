@@ -27,8 +27,8 @@ app.post('/submit', function (req, res) {
                   
       var emailFooter = "<br/><br/>" + "<div> Thanks, </div>" + 
                         "<div> Anandam Crackers </div>" + 
-                        "<div> Mobile # : 9943450902 / 9840248087 / 9786921234</div>" + 
-                        "<div> Email    : Anandamcrackersagency@gmail.com </div>"
+                        "<div> Mobile # : 9943450902 / 9789976094 / 9025138499 </div>" + 
+                        "<div> Email    :  ktsm1982@gmail.com </div>"
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       console.log(" Email : " + process.env.EMAIL)
