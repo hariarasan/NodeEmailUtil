@@ -5,6 +5,7 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 var mailer = require("./mail.js")
+var sgEmailer = require("./sgmail.js")
 
 const cors = require("cors")
 const bodyParser = require("body-parser");
@@ -32,7 +33,7 @@ app.post('/submit', function (req, res) {
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       console.log(" Email : " + process.env.EMAIL)
-      mailer.sendEmail({
+      sgEmailer.sendSgEmail({
             subject: "Anandam Crackers - Estimate for your Crackers Order",
             html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
             to: reqBody.customerEmail,
