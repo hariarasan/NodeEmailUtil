@@ -33,14 +33,23 @@ app.post('/submit', function (req, res) {
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       console.log(" Email : " + process.env.EMAIL)
-      sgEmailer.sendSgEmail({
+      // sgEmailer.sendSgEmail({
+      //       subject: "Anandam Crackers - Estimate for your Crackers Order",
+      //       html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
+      //       to: reqBody.customerEmail,
+      //       cc: "ktsm1982@gmail.com",
+      //       bcc: "rbabu2165@gmail.com",
+      //       from: process.env.EMAIL
+      // });     
+      
+      mailer.sendEmail({
             subject: "Anandam Crackers - Estimate for your Crackers Order",
             html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
             to: reqBody.customerEmail,
             cc: "ktsm1982@gmail.com",
             bcc: "rbabu2165@gmail.com",
             from: process.env.EMAIL
-      });      
+      });     
 
       res.send({response:'Your Order Submitted Successfully'});   
 })
