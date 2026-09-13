@@ -6,6 +6,7 @@ var app = express();
 var fs = require("fs");
 var mailer = require("./mail.js")
 var sgEmailer = require("./sgmail.js")
+var resendEmailer = require("./resendmail.js")
 
 const cors = require("cors")
 const bodyParser = require("body-parser");
@@ -42,14 +43,23 @@ app.post('/submit', function (req, res) {
       //       from: process.env.EMAIL
       // });     
       
-      mailer.sendEmail({
+      // mailer.sendEmail({
+      //       subject: "Anandam Crackers - Estimate for your Crackers Order",
+      //       html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
+      //       to: reqBody.customerEmail,
+      //       cc: "ktsm1982@gmail.com",
+      //       bcc: "rbabu2165@gmail.com",
+      //       from: process.env.EMAIL
+      // });
+
+      resendEmailer.sendResendEmail({
             subject: "Anandam Crackers - Estimate for your Crackers Order",
             html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
             to: reqBody.customerEmail,
             cc: "ktsm1982@gmail.com",
             bcc: "rbabu2165@gmail.com",
             from: process.env.EMAIL
-      });     
+      });
 
       res.send({response:'Your Order Submitted Successfully'});   
 })
