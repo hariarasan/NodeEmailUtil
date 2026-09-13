@@ -1,54 +1,54 @@
 require("dotenv").config();
-const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 
-const createTransporter = async () => {
+const createOAuth2Client = () => {
   const oauth2Client = new OAuth2(
     process.env.CLIENT_ID,
     process.env.CLIENT_SECRET,
     "https://developers.google.com/oauthplayground"
   );
-  console.log("Refresh Token: ")
-  console.log(process.env.REFRESH_TOKEN)
   oauth2Client.setCredentials({
-    refresh_token: process.env.REFRESH_TOKEN    
+    refresh_token: process.env.REFRESH_TOKEN
   });
 
-  const accessToken = await new Promise((resolve, reject) => {    
-    oauth2Client.getAccessToken((err, token) => {
-      if (err) {
-          console.log(err)
-        reject("Failed to create access token :(");
-      }
-      resolve(token);
-    });
-  });
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      type: "OAuth2",
-      user: process.env.EMAIL,
-      accessToken,
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      refreshToken: process.env.REFRESH_TOKEN
-    }
-  });
-
-  return transporter;
+  return oauth2Client;
 };
 
+// Gmail API expects an RFC 2822 message, base64url-encoded.
+const buildRawMessage = ({ from, to, cc, bcc, subject, html }) => {
+  const headers = [`From: ${from}`, `To: ${to}`];
+  if (cc) headers.push(`Cc: ${cc}`);
+  if (bcc) headers.push(`Bcc: ${bcc}`);
+  headers.push(`Subject: ${subject}`);
+  headers.push("MIME-Version: 1.0");
+  headers.push("Content-Type: text/html; charset=utf-8");
+
+  const message = headers.join("\r\n") + "\r\n\r\n" + html;
+
+  return Buffer.from(message)
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+};
+
+// Sends via the Gmail REST API (HTTPS) instead of SMTP, since hosts like
+// Render block outbound SMTP ports and cause connection timeouts.
 const sendEmail = async (emailOptions) => {
-    try {
-        let emailTransporter = await createTransporter();
-        await emailTransporter.sendMail(emailOptions);      
-    } catch (error) {
-        console.log(error)
-    }
-  
+  try {
+    const auth = createOAuth2Client();
+    const gmail = google.gmail({ version: "v1", auth });
+    await gmail.users.messages.send({
+      userId: "me",
+      requestBody: {
+        raw: buildRawMessage(emailOptions)
+      }
+    });
+    console.log("Email sent successfully via Gmail API");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-
-module.exports = { sendEmail }
+module.exports = { sendEmail };

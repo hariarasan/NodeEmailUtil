@@ -43,16 +43,7 @@ app.post('/submit', function (req, res) {
       //       from: process.env.EMAIL
       // });     
       
-      // mailer.sendEmail({
-      //       subject: "Anandam Crackers - Estimate for your Crackers Order",
-      //       html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
-      //       to: reqBody.customerEmail,
-      //       cc: "ktsm1982@gmail.com",
-      //       bcc: "rbabu2165@gmail.com",
-      //       from: process.env.EMAIL
-      // });
-
-      resendEmailer.sendResendEmail({
+      mailer.sendEmail({
             subject: "Anandam Crackers - Estimate for your Crackers Order",
             html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
             to: reqBody.customerEmail,
@@ -60,6 +51,15 @@ app.post('/submit', function (req, res) {
             bcc: "rbabu2165@gmail.com",
             from: process.env.EMAIL
       });
+
+      // resendEmailer.sendResendEmail({
+      //       subject: "Anandam Crackers - Estimate for your Crackers Order",
+      //       html: emailText + reqBody.emailHtmlContent + customerDetails + emailFooter,
+      //       to: reqBody.customerEmail,
+      //       cc: "ktsm1982@gmail.com",
+      //       bcc: "rbabu2165@gmail.com",
+      //       from: process.env.EMAIL
+      // });
 
       res.send({response:'Your Order Submitted Successfully'});   
 })
